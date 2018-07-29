@@ -89,7 +89,7 @@ def register(bot, update, args):
 
 
 	#send user data to users_data
-	users_data[str(user_chatid)]= {"user_firstname":str(user_firstname), "user_username":user_username, "user_suggestion":user_suggestion}
+	users_data[str(user_chatid)]= {"user_firstname":str(user_firstname), "user_username":user_username, "user_register":user_register}
 
 	#make report message about user's biodata
 	msg = "NAME: "+user_firstname+"\n"
