@@ -1,0 +1,98 @@
+# Innocent Promotion Bot source code
+# Owned by Innocent Promotions ™
+# Programmed by @dharmaraj_24 //Python-telegram-bot
+
+# V1:---
+# Basic Functions
+# Updated Description and BotPic
+# Print messages to channels
+# // Use @username of channel in "chat_id='@username'"
+# Developer commands only !!
+users_data = {}
+vip_developer = 293125876
+channel_id = 1383113458
+group_id = -1001135607371
+#Importing Modules
+try: 
+    import os, telegram, time, sys, logging 
+    from telegram.ext import Updater, CommandHandler, MessageHandler, Filters 
+    from telegram.ext.dispatcher import run_async 
+    from functools import wraps 
+    from pprint import pprint
+except ImportError as e: print("Problem: ",e) exit() 
+
+#Bot Data (Please insert bot token here!)
+namebot = 'GOOP TEST BOT'
+verbot = 'v1' #<== You can change this version with your real bot version
+tokenbot= '676582608:AAFfxPfbywkMcAQZ3hyFO-jQ_sCvBFTCC-U' #<-- Put your bot token here! 
+
+#polling setup
+try: 
+    updater= Updater(tokenbot)
+except ValueError as e: 
+    print("Please insert your tokenbot!") 
+    exit() 
+
+#webhook setup
+#
+#Webhook(Heroku):
+#-------------------------------
+#PORT = int(os.environ.get('PORT', '5000'))
+#updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
+#
+#updater.bot.start_webhook("https://<appname>.herokuapp.com/" + TOKEN)
+#-------------------------------- 
+
+#handling command
+dispatcher = updater.dispatcher 
+
+#logging setup
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
+#Enter functioning
+#Commands
+
+@run_async
+def start(bot, update):
+    msg= "Hello ^_^ ! Please type /help for more assistance!"
+    bot.send_message(chat_id=update.message.chat_id, text=msg)
+
+
+
+
+
+
+
+
+
+
+
+#command Configuration
+
+start_handler         = CommandHandler('start', start)
+
+
+
+
+
+
+
+
+
+#setting command
+
+dispatcher.add_handler(start_handler)
+
+
+
+
+
+
+
+
+
+
+#polling
+
+print(namebot,' ',verbot,' : Start!')
+updater.start_polling()
