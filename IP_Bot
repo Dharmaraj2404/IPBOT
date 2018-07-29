@@ -18,8 +18,8 @@ try:
     from telegram.ext.dispatcher import run_async 
     from functools import wraps 
     from pprint import pprint
-except 
-    ImportError as e: print("Problem: ",e) 
+except ImportError as e:
+    print("Problem: ",e) 
     exit() 
 
 #Bot Data (Please insert bot token here!)
