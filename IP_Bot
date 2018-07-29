@@ -57,6 +57,53 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 def start(bot, update):
     msg= "Hello ^_^ ! Please type /help for more assistance!"
     bot.send_message(chat_id=update.message.chat_id, text=msg)
+    
+@run_async
+def help(bot, update):
+    msg= "**`Here is a list of Available Commands!`** \n"
+    msg+= "/developer - Meet my Developers \n"
+    msg+= "/myid - Shows your Telegram ID \n"
+    msg+= "/register - Register your channel for promotion! \n"
+    bot.send_message(chat_id=update.message.chat_id, text=msg)
+    
+@run_async	
+#Registration command code
+def register(bot, update, args):
+	#avoid request from grup (PM Only)
+	if update.message.chat_id < 0:
+		return
+	#user data
+	user_username = update.effective_user.username
+	user_chatid   = update.message.chat_id
+	user_firstname= update.message.from_user.first_name
+	try:
+	user_register = " ".join(args[0:])	
+	except IndexError as e:
+		update.message.reply_text("Please input your channel username!")
+		return
+
+	#filter for avoid spammer
+	if len(user_register) > 50:
+		bot.send_message(chat_id=update.message.chat_id, text="*Please do not exceed 50 characters*", parse_mode=telegram.ParseMode.MARKDOWN)
+		return
+
+
+	#send user data to users_data
+	users_data[str(user_chatid)]= {"user_firstname":str(user_firstname), "user_username":user_username, "user_suggestion":user_suggestion}
+
+	#make report message about user's biodata
+	msg = "NAME: "+user_firstname+"\n"
+	msg+= "Username  : @"+user_username+"\n"
+	msg+= "Chat ID : @"+user_chatid+"\n"
+	msg+= "Registered Channel  : "+user_register+"\n"
+
+	print(users_data)
+	print("\n")
+	print(msg)
+
+	#send message to user
+	bot.send_message(chat_id=-1001371252461, text=msg, parse_mode=telegram.ParseMode.MARKDOWN)
+
 
 
 
@@ -71,6 +118,8 @@ def start(bot, update):
 #command Configuration
 
 start_handler         = CommandHandler('start', start)
+help_handler          = CommandHandler('help', help)
+register_handler      = CommandHandler('register', register)
 
 
 
@@ -83,6 +132,8 @@ start_handler         = CommandHandler('start', start)
 #setting command
 
 dispatcher.add_handler(start_handler)
+dispatcher.add_handler(help_handler)
+dispatcher.add_handler(register_handler)
 
 
 
